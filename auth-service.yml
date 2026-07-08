@@ -6,6 +6,7 @@ spring:
     url: jdbc:mysql://localhost:3306/ecommerce
     username: root
     password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
@@ -20,3 +21,9 @@ eureka:
 jwt:
   secret: ThisIsASecretKeyForJWTTokenGenerationPleaseChangeInProduction123456
   expiration: 86400000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
