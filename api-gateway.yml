@@ -2,13 +2,28 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: api-gateway
+
   cloud:
     gateway:
-      discovery:https://github.com/SharvilGit15/ecommerce-config/tree/main
-        locator:
-          enabled: true
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+
+          routes:
+            - id: auth-service
+              uri: lb://AUTH-SERVICE
+              predicates:
+                - Path=/auth/**
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://localhost:8761/eureka/
+
+jwt:
+  secret: ThisIsMyVeryLongSecretKeyForJWTAuthentication123456789
