@@ -5,6 +5,12 @@ spring:
   application:
     name: api-gateway
 
+  config:
+    import: optional:configserver:http://localhost:8888
+
+  main:
+    web-application-type: reactive
+
   cloud:
     gateway:
       server:
@@ -14,12 +20,21 @@ spring:
               enabled: true
               lower-case-service-id: true
 
-          routes:
-            - id: auth-service
-              uri: lb://AUTH-SERVICE
-              predicates:
-                - Path=/auth/**
+      routes:
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth/**
 
+            - id: product-service
+              uri: lb://PRODUCT-SERVICE
+              predicates:
+                - Path=/products/**
+
+            - id: order-service
+              uri: lb://ORDER-SERVICE
+              predicates:
+                - Path=/orders/**
 eureka:
   client:
     service-url:
@@ -27,3 +42,4 @@ eureka:
 
 jwt:
   secret: ThisIsMyVeryLongSecretKeyForJWTAuthentication123456789
+  
