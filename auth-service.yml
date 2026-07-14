@@ -2,8 +2,14 @@ server:
   port: 8081
 
 spring:
+  application:
+    name: auth-service
+
+  config:
+    import: optional:configserver:http://localhost:8888
+
   datasource:
-    url: jdbc:mysql://localhost:3306/ecommerce
+    url: jdbc:mysql://localhost:3306/ecommerce_auth
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -12,19 +18,24 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-
-jwt:
-  secret: ThisIsASecretKeyForJWTTokenGenerationPleaseChangeInProduction123456
-  expiration: 86400000
-  
+    properties:
+      hibernate:
+        format_sql: true
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+jwt:
+  secret: ThisIsMyVeryLongSecretKeyForJWTAuthentication123456789
