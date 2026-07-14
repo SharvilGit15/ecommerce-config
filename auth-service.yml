@@ -1,13 +1,7 @@
-server:
+sserver:
   port: 8081
 
 spring:
-  application:
-    name: auth-service
-
-  config:
-    import: optional:configserver:http://localhost:8888
-
   datasource:
     url: jdbc:mysql://localhost:3306/ecommerce_auth
     username: root
@@ -33,9 +27,10 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
+jwt:
+  secret: ThisIsMyVeryLongSecretKeyForJWTAuthentication123456789
+  expiration: 86400000
+
 logging:
   level:
     org.springframework.security: DEBUG
-
-jwt:
-  secret: ThisIsMyVeryLongSecretKeyForJWTAuthentication123456789
